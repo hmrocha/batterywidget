@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-    Batteroid 0.1 - Android widget to display battery level
+    Battery Widget - Minimalistic Android Battery Widget
     Copyright (C) 2011 Henrique Rocha <hmrocha@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -19,19 +19,24 @@
  -->
  
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="net.henriquerocha.android.batteroid" android:versionCode="1"
-	android:versionName="0.1">
+    package="org.androidappdev.batterywidget" 
+	android:versionName="0.2" 
+	android:versionCode="2">
+	
 	<uses-sdk android:minSdkVersion="3" />
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name">
+	<application android:icon="@drawable/battery" android:label="@string/app_name">
 
-		<receiver android:name=".BatteroidAppWidgetProvider">
+		<receiver android:name="BatteryAppWidgetProvider">
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/appwidget_info" />
 		</receiver>
-
+		
+        <!-- Service to maintain widget alive -->
+        <service android:name="BatteryService" />
+        
 	</application>
 </manifest>
