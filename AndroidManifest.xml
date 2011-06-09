@@ -19,9 +19,8 @@
  -->
  
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.androidappdev.batterywidget" 
-	android:versionName="0.2" 
-	android:versionCode="2">
+    android:versionName="0.2" 
+	android:versionCode="2" package="org.androidappdev.donate.batterywidget">
 	
 	<uses-sdk android:minSdkVersion="3" />
 
