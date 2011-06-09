@@ -35,15 +35,4 @@ public class BatteryAppWidgetProvider extends AppWidgetProvider {
 		context.startService(new Intent(context, BatteryService.class));
 	}
 	
-	@Override
-	public void onDeleted(Context context, int[] appWidgetIds) {
-		super.onDeleted(context, appWidgetIds);
-		context.stopService(new Intent(context, BatteryService.class));
-	}
-	
-	@Override
-	public void onDisabled(Context context) {
-		super.onDisabled(context);
-		context.stopService(new Intent(context, BatteryService.class));
-	}
 }

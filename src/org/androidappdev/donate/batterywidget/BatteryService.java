@@ -84,12 +84,6 @@ public class BatteryService extends Service {
 		};
 	}
 	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		this.unregisterReceiver(this.batteryReceiver);
-	}
-
 	/**
 	 * Build a widget update to show the current battery level.
 	 */
