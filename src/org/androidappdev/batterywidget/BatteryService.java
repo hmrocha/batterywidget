@@ -40,25 +40,31 @@ public class BatteryService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		if (this.batteryReceiver == null) {
-			this.batteryReceiver = batteryLevelReceiver();
-			registerReceiver(this.batteryReceiver, new IntentFilter(
-					Intent.ACTION_BATTERY_CHANGED));
-			Log.d(TAG, "Registered receiver");
+		try {
+			if (this.batteryReceiver == null) {
+				this.batteryReceiver = batteryLevelReceiver();
+				registerReceiver(this.batteryReceiver, new IntentFilter(
+						Intent.ACTION_BATTERY_CHANGED));
+				Log.d(TAG, "Registered receiver");
+			}
+
+			// Build the widget update.
+			RemoteViews updateViews = buildUpdate(this);
+
+			// Push update for this widget to the home screen
+			ComponentName batteryWidget = new ComponentName(this,
+					BatteryAppWidgetProvider.class);
+			AppWidgetManager appWidgetManager = AppWidgetManager
+					.getInstance(this);
+			appWidgetManager.updateAppWidget(batteryWidget, updateViews);
+		} catch (Exception e) {
+			Log.e(TAG, "onStart", e);
 		}
-
-		// Build the widget update.
-		RemoteViews updateViews = buildUpdate(this);
-
-		// Push update for this widget to the home screen
-		ComponentName batteryWidget = new ComponentName(this,
-				BatteryAppWidgetProvider.class);
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-		appWidgetManager.updateAppWidget(batteryWidget, updateViews);
 	}
 
 	/**
 	 * Battery level receiver
+	 * 
 	 * @return a BroadcastReceiver to handle ACTION_BATTERY_CHANGED
 	 */
 	private BroadcastReceiver batteryLevelReceiver() {
@@ -83,17 +89,22 @@ public class BatteryService extends Service {
 			}
 		};
 	}
-	
+
 	/**
 	 * Build a widget update to show the current battery level.
 	 */
 	private RemoteViews buildUpdate(Context context) {
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.main);
-		views.setTextViewText(R.id.battery_level, this.batteryLevel.toString());
-		ComponentName cn = new ComponentName(context,
-				BatteryAppWidgetProvider.class);
-		AppWidgetManager.getInstance(context).updateAppWidget(cn, views);
+		try {
+			views.setTextViewText(R.id.battery_level, this.batteryLevel
+					.toString());
+			ComponentName cn = new ComponentName(context,
+					BatteryAppWidgetProvider.class);
+			AppWidgetManager.getInstance(context).updateAppWidget(cn, views);
+		} catch (Exception e) {
+			Log.e(TAG, "buildUpdate", e);
+		}
 		return views;
 	}
 
