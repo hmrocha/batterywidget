@@ -23,9 +23,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:background="@drawable/appwidget_bg">
-    >
+    android:gravity="center">
 
 <LinearLayout 
     android:orientation="horizontal"

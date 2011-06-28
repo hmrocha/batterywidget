@@ -17,6 +17,7 @@
  */
 package org.androidappdev.batterywidget;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -29,37 +30,32 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 /**
- * Service to monitor battery level changes.
- * 
+ * Service to monitor battery level and temperature changes.
  * @author Henrique Rocha
  */
 public class BatteryService extends Service {
 	private static final String TAG = "BatteryService";
 	private BroadcastReceiver batteryReceiver;
-	private Integer batteryLevel = 0;
+	private Integer currentLevel = 0;
+	private Integer currentTemperature = 0;
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		try {
-			if (this.batteryReceiver == null) {
-				this.batteryReceiver = batteryLevelReceiver();
-				registerReceiver(this.batteryReceiver, new IntentFilter(
-						Intent.ACTION_BATTERY_CHANGED));
-				Log.d(TAG, "Registered receiver");
-			}
-
-			// Build the widget update.
-			RemoteViews updateViews = buildUpdate(this);
-
-			// Push update for this widget to the home screen
-			ComponentName batteryWidget = new ComponentName(this,
-					BatteryAppWidgetProvider.class);
-			AppWidgetManager appWidgetManager = AppWidgetManager
-					.getInstance(this);
-			appWidgetManager.updateAppWidget(batteryWidget, updateViews);
-		} catch (Exception e) {
-			Log.e(TAG, "onStart", e);
+		if (this.batteryReceiver == null) {
+			this.batteryReceiver = batteryLevelReceiver();
+			registerReceiver(this.batteryReceiver, new IntentFilter(
+					Intent.ACTION_BATTERY_CHANGED));
+			Log.d(TAG, "Registered receiver");
 		}
+
+		// Build the widget update.
+		RemoteViews updateViews = buildUpdate(this);
+
+		// Push update for this widget to the home screen
+		ComponentName batteryWidget = new ComponentName(this,
+				BatteryAppWidgetProvider.class);
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+		appWidgetManager.updateAppWidget(batteryWidget, updateViews);
 	}
 
 	/**
@@ -75,15 +71,17 @@ public class BatteryService extends Service {
 
 				if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
 					int level = intent.getIntExtra("level", 0);
+					int temperature = intent.getIntExtra("temperature", 0);
 					Log.d(TAG, "Level: " + new Integer(level).toString());
 					// Only update widget if level changed, other changes
 					// like temperature don't matter.
-					if (batteryLevel != level) {
-						batteryLevel = level;
-						Log.d(TAG, "Starting service");
-						Intent levelChanged = new Intent(context,
+					if (currentLevel != level
+							|| currentTemperature != temperature) {
+						currentLevel = level;
+						currentTemperature = temperature;
+						Intent statusChanged = new Intent(context,
 								BatteryService.class);
-						context.startService(levelChanged);
+						context.startService(statusChanged);
 					}
 				}
 			}
@@ -95,16 +93,23 @@ public class BatteryService extends Service {
 	 */
 	private RemoteViews buildUpdate(Context context) {
 		RemoteViews views = new RemoteViews(context.getPackageName(),
-				R.layout.main);
-		try {
-			views.setTextViewText(R.id.battery_level, this.batteryLevel
-					.toString());
-			ComponentName cn = new ComponentName(context,
-					BatteryAppWidgetProvider.class);
-			AppWidgetManager.getInstance(context).updateAppWidget(cn, views);
-		} catch (Exception e) {
-			Log.e(TAG, "buildUpdate", e);
-		}
+				BatteryAppWidgetProvider.currentLayout);
+
+		// Action for tap on widget
+		Intent bcast = new Intent(context, BatteryAppWidgetProvider.class);
+		bcast.setAction(BatteryAppWidgetProvider.ACTION_CHANGE_BG);
+		PendingIntent pending = PendingIntent.getBroadcast(context, 0, bcast,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		views.setOnClickPendingIntent(R.id.widget, pending);
+
+		views.setTextViewText(R.id.battery_level, this.currentLevel.toString());
+		Integer celsius = this.currentTemperature / 10; 
+		views.setTextViewText(R.id.battery_temperature, celsius.toString() + "º C");
+		Integer fahrenheit = (int) (9.0 / 5.0 * (this.currentTemperature / 10 + 32) + 0.5);
+		views.setTextViewText(R.id.fahrenheit, fahrenheit.toString() + "º F");
+		ComponentName cn = new ComponentName(context,
+				BatteryAppWidgetProvider.class);
+		AppWidgetManager.getInstance(context).updateAppWidget(cn, views);
 		return views;
 	}
 

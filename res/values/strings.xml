@@ -20,5 +20,6 @@
 
 <resources>
     <string name="level">...</string>
+    <string name="temperature">...</string>
     <string name="app_name">Battery Widget</string>
 </resources>

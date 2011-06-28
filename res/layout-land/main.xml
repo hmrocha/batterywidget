@@ -25,7 +25,6 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:background="@drawable/appwidget_bg">
-    >
 
 <LinearLayout 
     android:orientation="horizontal"
@@ -38,7 +37,7 @@
     android:layout_width="wrap_content" 
     android:layout_height="fill_parent" 
     android:text="@string/level"
-    android:textSize="24dp"
+    android:textSize="32dp"
     android:textColor="#FFFFFF"
     android:textStyle="bold"
     android:gravity="center_vertical"
@@ -48,7 +47,7 @@
     android:layout_width="wrap_content" 
     android:layout_height="fill_parent" 
     android:text="%"
-    android:textSize="12dp"
+    android:textSize="22dp"
     android:textColor="#FFFFFF"
     android:textStyle="bold"
     android:gravity="center_vertical"
@@ -64,6 +63,7 @@
     android:textColor="#FFFFFF"
     android:textStyle="bold"
     android:gravity="center_vertical"
+    android:visibility="gone"
     />
 
     <TextView
@@ -75,6 +75,7 @@
     android:textColor="#FFFFFF"
     android:textStyle="bold"
     android:gravity="center_vertical"
+    android:visibility="gone"    
     />
 
 </LinearLayout>
