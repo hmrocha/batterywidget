@@ -1,5 +1,5 @@
 /*  
- *  Battery Widget - Simple Android Battery Widget
+ *  Battery Widget
  *  Copyright (C) 2011 Henrique Rocha <hmrocha@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,16 +23,15 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Simple Battery Widget
- * @author Henrique Rocha
+ * Battery Widget
+ * @author Henrique Rocha <hmrocha@gmail.com>
  */
 public class BatteryAppWidgetProvider extends AppWidgetProvider {
+	static int currentLayout = -1;
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
-
 		context.startService(new Intent(context, BatteryService.class));
 	}
-	
 }

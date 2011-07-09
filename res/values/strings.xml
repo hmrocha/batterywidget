@@ -20,5 +20,13 @@
 
 <resources>
     <string name="level">...</string>
-    <string name="app_name">Battery Widget (donation)</string>
+    <string name="temperature">...</string>
+    <string name="app_name">Battery Widget</string>
+    
+    <!-- Strings for the configuration activity. -->
+    <string name="choose_layout">Choose layout:</string>
+    <string name="show_temperature">Show battery temperature</string>
+    <string name="circular">Circular</string>
+    <string name="transparent">Transparent</string>    
+    <string name="save">Save</string>
 </resources>
