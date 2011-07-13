@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 public class BatteryWidgetConfigure extends Activity {
 	private static final String PREFS_NAME = "org.androidappdev.batterywidget.BatteryAppWidgetProvider";

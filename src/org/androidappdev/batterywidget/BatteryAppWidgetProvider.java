@@ -21,46 +21,17 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * Battery Widget
  * @author Henrique Rocha <hmrocha@gmail.com>
  */
 public class BatteryAppWidgetProvider extends AppWidgetProvider {
-<<<<<<< HEAD
-	private static final String TAG = "BatteryAppWidgetProvider";
-	public static final String ACTION_CHANGE_BG = "ACTION_CHANGE_BG";
-=======
->>>>>>> 84ce188976447506bd3ae27a49b6b4957e4bbd24
 	static int currentLayout = -1;
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
-<<<<<<< HEAD
-		if (BatteryAppWidgetProvider.currentLayout == -1)
-			BatteryAppWidgetProvider.currentLayout = R.layout.main;
 		context.startService(new Intent(context, BatteryService.class));
 	}
-
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		if (intent.getAction().equals(ACTION_CHANGE_BG)) {
-			Log.d(TAG, ACTION_CHANGE_BG);
-			
-			if (BatteryAppWidgetProvider.currentLayout == R.layout.main)
-				BatteryAppWidgetProvider.currentLayout = R.layout.transparent;
-			else
-				BatteryAppWidgetProvider.currentLayout = R.layout.main;
-			
-			context.startService(new Intent(context, BatteryService.class));
-			context.startService(intent);
-		}
-		super.onReceive(context, intent);
-	}
-=======
-		context.startService(new Intent(context, BatteryService.class));
-	}
->>>>>>> 84ce188976447506bd3ae27a49b6b4957e4bbd24
 }

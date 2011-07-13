@@ -17,7 +17,6 @@
  */
 package org.androidappdev.batterywidget;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
