@@ -17,7 +17,6 @@
  */
 package org.androidappdev.donate.batterywidget;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -84,9 +83,12 @@ public class BatteryService extends Service {
 					Log.d(TAG, "Level: " + level);
 					// Only update widget if level changed, other changes
 					// like temperature don't matter.
-					if (currentLevel != level
-							|| currentTemperature != temperature) {
-						currentLevel = level;
+					if (currentLevel != level) {
+						currentLevel = level;						
+						needsUpdate = true;
+					}
+					boolean showTemperature = BatteryWidgetConfigure.getTemperaturePref(context);
+					if (showTemperature && currentTemperature != temperature) {
 						currentTemperature = temperature;
 						needsUpdate = true;
 					}
