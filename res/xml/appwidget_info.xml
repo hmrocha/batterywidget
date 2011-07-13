@@ -23,6 +23,6 @@
     android:minHeight="72dip"
     android:updatePeriodMillis="300000"
     android:initialLayout="@layout/main"
-    android:configure="org.androidappdev.donate.batterywidget.BatteryWidgetConfigure" 
+    android:configure="org.androidappdev.batterywidget.BatteryWidgetConfigure" 
     >
 </appwidget-provider>
