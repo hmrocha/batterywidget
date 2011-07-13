@@ -24,7 +24,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@drawable/clock_dial_green"
+    android:background="@drawable/clock_dial_red"
     >
 
     <TextView
@@ -32,11 +32,12 @@
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content"
     android:text="@string/level"
-    android:textSize="16dp"
+    android:textSize="22dp"
     android:textColor="#FFFFFF"
     android:textStyle="bold"
-    android:gravity="center_vertical"
+    android:gravity="center"
     />
+
 	<TextView
    		android:id="@+id/temperature" 
    		android:layout_width="wrap_content"
