@@ -52,13 +52,13 @@ public class BatteryService extends Service {
 
         // Build the widget update.
         RemoteViews updateViews = buildUpdate(this);
-        
+
         // Show power usage when widget is tapped.
         Intent intentBatteryUsage = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentBatteryUsage,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         updateViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
-        
+
         // Push update for this widget to the home screen
         ComponentName batteryWidget = new ComponentName(this, BatteryAppWidgetProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -132,13 +132,6 @@ public class BatteryService extends Service {
         RemoteViews views = new RemoteViews(context.getPackageName(),
                 BatteryAppWidgetProvider.currentLayout);
 
-        // Action for tap on widget
-        // Intent bcast = new Intent(context, BatteryAppWidgetProvider.class);
-        // bcast.setAction(BatteryAppWidgetProvider.ACTION_CHANGE_BG);
-        // PendingIntent pending = PendingIntent.getBroadcast(context, 0, bcast,
-        // PendingIntent.FLAG_UPDATE_CURRENT);
-        // views.setOnClickPendingIntent(R.id.widget, pending);
-
         views.setTextViewText(R.id.battery_level, this.currentLevel.toString());
         Integer temperature = this.currentTemperature / 10;
 
@@ -157,6 +150,12 @@ public class BatteryService extends Service {
         ComponentName cn = new ComponentName(context, BatteryAppWidgetProvider.class);
         AppWidgetManager.getInstance(context).updateAppWidget(cn, views);
         return views;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(this.batteryReceiver);
     }
 
     @Override
