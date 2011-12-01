@@ -84,11 +84,17 @@ public class BatteryService extends Service {
 
                 if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
                     int level = intent.getIntExtra("level", 0);
+                    int scale = intent.getIntExtra("scale", 1);
+                    if (scale <= 0) {
+                        scale = 100;
+                    }
+                    level = level * 100 / scale;
                     int temperature = intent.getIntExtra("temperature", 0);
                     Log.d(TAG, "Level: " + level);
                     // Only update widget if level changed, other changes
                     // like temperature don't matter.
                     if (currentLevel != level) {
+
                         currentLevel = level;
                         needsUpdate = true;
                     }
@@ -131,9 +137,9 @@ public class BatteryService extends Service {
     private RemoteViews buildUpdate(Context context) {
         RemoteViews views = new RemoteViews(context.getPackageName(),
                 BatteryAppWidgetProvider.currentLayout);
-
         views.setTextViewText(R.id.battery_level, this.currentLevel.toString());
-        Integer temperature = this.currentTemperature / 10;
+        Integer temperature = this.currentTemperature > 100 ? this.currentTemperature / 10
+                : this.currentTemperature;
 
         boolean showTemperature = BatteryWidgetConfigure.getTemperaturePref(context);
         if (showTemperature) {
