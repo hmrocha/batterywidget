@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
     Battery Widget - Minimalistic Android Battery Widget
     Copyright (C) 2011 Henrique Rocha <hmrocha@gmail.com>
@@ -16,17 +15,20 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>. 
- -->
+-->
 
 <resources>
+
     <string name="level">...</string>
     <string name="temperature">...</string>
     <string name="app_name">Battery Widget</string>
-    
+
     <!-- Strings for the configuration activity. -->
     <string name="choose_layout">Choose layout:</string>
     <string name="show_temperature">Show battery temperature</string>
     <string name="circular">Circular</string>
-    <string name="transparent">Transparent</string>    
+    <string name="transparent">Transparent</string>
     <string name="save">Save</string>
+    <string name="warning">Battery temperature value may not work if your smartphone doesn\'t have a battery temperature sensor.</string>
+
 </resources>
