@@ -28,7 +28,7 @@ import android.content.Intent;
  * @author Henrique Rocha <hmrocha@gmail.com>
  */
 public class BatteryAppWidgetProvider extends AppWidgetProvider {
-    static int currentLayout = R.layout.main;
+    static int currentLayout = -1;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
